@@ -1,12 +1,9 @@
 <script setup>
-
+import TaskFilters from "./components/TaskFilters.vue";
+import TaskList from "./components/TaskList.vue";
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline bg-red-300">
-    Hello world!
-  </h1>
+  <TaskFilters />
+  <TaskList />
 </template>
-<style scoped>
-
-</style>
