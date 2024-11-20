@@ -16,7 +16,7 @@ export const useDataStore = defineStore('dataStore', {
         this.authors = response.data.authors;
         this.tasks = response.data.tasks;
       } catch (error) {
-        console.log(error)
+        console.error(error)
       }
     },
   },

@@ -16,6 +16,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <TaskFilters />
-  <TaskList />
+    <div class="min-h-screen bg-gray-100 p-4">
+      <TaskFilters />
+      <TaskList />
+  </div>
+
 </template>
