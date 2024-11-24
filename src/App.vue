@@ -4,21 +4,21 @@ import { useDataStore } from "./store/useDataStore";
 
 import TaskFilters from "./components/TaskFilters.vue";
 import TaskList from "./components/TaskList.vue";
+import NewTaskForm from "./components/NewTaskForm.vue";
 
 const store = useDataStore();
 
 onMounted(() => {
   store.loadData();
-  console.log('Columns:', store.columns);
-  console.log('Authors:', store.authors);
-  console.log('Tasks:', store.tasks);
 });
 </script>
 
-<template>
-    <div class="min-h-screen bg-gray-100 p-4">
-      <TaskFilters />
-      <TaskList />
-  </div>
 
+<template>
+  <div class="min-h-screen bg-green-200 p-4">
+    <NewTaskForm />
+    <TaskFilters />
+    <TaskList />
+  </div>
 </template>
+ 
