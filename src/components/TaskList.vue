@@ -15,6 +15,7 @@ const getAuthorName = (authorId) => {
 const filteredTasks = (column) =>
   store.tasks
     .filter((task) => task.current_column === column)
+    .sort((a, b) => b.id - a.id)
     .map((task) => ({
       ...task,
       author_name: getAuthorName(task.author_id),
