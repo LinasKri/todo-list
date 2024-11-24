@@ -10,8 +10,8 @@ defineProps({
 </script>
 
 <template>
-  <div>
-    <h3>{{ task.title }}</h3>
-    <p>Author: {{ task.author_name }}</p>
+  <div class="border border-gray-300 p-4 rounded shadow-sm">
+    <h3 class="text-md font-semibold">{{ task.title }}</h3>
+    <p class="text-sm text-gray-600">Author: {{ task.author_name }}</p>
   </div>
 </template>
