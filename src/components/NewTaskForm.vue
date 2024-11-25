@@ -16,20 +16,23 @@ const addTask = () => {
   }
 
   const newTask = {
-    id: store.tasks.length + 1,
+    id: Date.now(),
     title: newTaskTitle.value,
     author_id: selectedAuthor.value,
+    author_name: store.authors.find((a) => a.id === selectedAuthor.value)?.display_name || "Unknown Author",
     date_created: new Date().toISOString().split("T")[0],
     current_column: "To do",
   };
 
-  store.tasks.push(newTask);
+  if (!store.tasks["To do"]) {
+    store.tasks["To do"] = [];
+  }
+  store.tasks["To do"].unshift(newTask);
 
   newTaskTitle.value = "";
   selectedAuthor.value = null;
 
   successMessage.value = true;
-
   setTimeout(() => {
     successMessage.value = false;
   }, 3000);
@@ -37,18 +40,18 @@ const addTask = () => {
 </script>
 
 <template>
-  <div class="p-5 bg-orange-200">
-    <h3>Create a new Task</h3>
+  <div class="p-5 bg-orange-200 rounded mb-4">
+    <h3 class="text-3xl mb-2">Create a new Task</h3>
 
     <div
       v-if="successMessage"
-      class="bg-green-100 text-green-800 p-2 rounded mb-4 text-center border border-green-300"
+      class="bg-green-100 text-green-800 p-2 rounded- mb-4 text-center border border-green-300"
     >
       Task Created!
     </div>
 
     <div class="mb-4">
-      <label>Title</label>
+      <label class="block text-sm mb-1">Title</label>
       <input
         v-model="newTaskTitle"
         type="text"
