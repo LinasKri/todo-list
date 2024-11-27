@@ -8,11 +8,10 @@ import NewTaskForm from "./components/NewTaskForm.vue";
 
 const store = useDataStore();
 
-onMounted(() => {
-  store.loadData();
+onMounted(async () => {
+  await store.loadData();
 });
 </script>
-
 
 <template>
   <div class="min-h-screen bg-green-200 p-4">

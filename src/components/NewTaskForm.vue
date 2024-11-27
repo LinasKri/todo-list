@@ -40,12 +40,12 @@ const addTask = () => {
 </script>
 
 <template>
-  <div class="p-5 bg-orange-200 rounded mb-4">
+  <div class="p-5 bg-orange-200 rounded mb-4 relative">
     <h3 class="text-3xl mb-2">Create a new Task</h3>
 
     <div
       v-if="successMessage"
-      class="bg-green-100 text-green-800 p-2 rounded- mb-4 text-center border border-green-300"
+      class="bg-green-100 text-green-800 p-2 rounded- mb-4 text-center border border-green-300 absolute w-full top-4 left-0 right-0"
     >
       Task Created!
     </div>

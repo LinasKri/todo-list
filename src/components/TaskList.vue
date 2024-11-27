@@ -4,13 +4,6 @@ import TaskItem from "./TaskItem.vue";
 import draggable from "vuedraggable";
 
 const store = useDataStore();
-
-const handleDrop = (event) => {
-  const taskId = event.item.id;
-  const fromColumn = event.from.dataset.column;
-  const toColumn = event.to.dataset.column;
-  store.moveTask(taskId, fromColumn, toColumn);
-};
 </script>
 
 <template>
@@ -27,11 +20,14 @@ const handleDrop = (event) => {
           :list="store.tasks[column]"
           group="tasks"
           itemKey="id"
-          @end="handleDrop"
+          :key="store.tasks[column].length"
           class="space-y-4"
+          :data-column="column"
         >
           <template #item="{ element }">
-            <TaskItem :task="element" />
+            <div :data-id="element.id">
+              <TaskItem :task="element" />
+            </div>
           </template>
         </draggable>
       </div>
