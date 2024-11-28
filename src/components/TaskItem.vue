@@ -1,6 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
-
 defineProps({
   task: {
     type: Object,
@@ -11,7 +9,6 @@ defineProps({
 
 <template>
   <div
-    v-bind:data-id="task.id"
     class="task-item border border-gray-300 p-4 rounded shadow-sm cursor-pointer select-none bg-white"
   >
     <h3 class="font-semibold">{{ task.title }}</h3>

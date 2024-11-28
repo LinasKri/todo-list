@@ -17,17 +17,14 @@ const store = useDataStore();
       >
         <h2 class="text-lg font-bold text-center mb-4">{{ column }}</h2>
         <draggable
-          :list="store.tasks[column]"
+          :list="store.filteredTasks[column]"
           group="tasks"
           itemKey="id"
-          :key="store.tasks[column].length"
           class="space-y-4"
           :data-column="column"
         >
           <template #item="{ element }">
-            <div :data-id="element.id">
-              <TaskItem :task="element" />
-            </div>
+            <TaskItem :task="element" />
           </template>
         </draggable>
       </div>

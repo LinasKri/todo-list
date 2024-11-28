@@ -6,6 +6,7 @@ export const useDataStore = defineStore("dataStore", {
     columns: [],
     authors: [],
     tasks: {},
+    filteredTasks: {},
   }),
 
   actions: {
@@ -28,8 +29,10 @@ export const useDataStore = defineStore("dataStore", {
               })),
           };
         }, {});
+
+        this.filteredTasks = { ...this.tasks };
       } catch (error) {
-        console.error("Error:", error);
+        console.error("Error loding data:", error);
       }
     },
 
@@ -40,19 +43,20 @@ export const useDataStore = defineStore("dataStore", {
       );
     },
 
-    moveTask(taskId, fromColumn, toColumn) {
-      const taskIndex = this.tasks[fromColumn]?.findIndex(
-        (task) => task.id === taskId
+    filterTasks(authorId, title) {
+      this.filteredTasks = Object.keys(this.tasks).reduce(
+        (accumulator, column) => {
+          const filtered = this.tasks[column].filter((task) => {
+            const matchesAuthor = authorId ? task.author_id === authorId : true;
+            const matchesTitle = task.title
+              .toLowerCase()
+              .includes(title.toLowerCase());
+            return matchesAuthor && matchesTitle;
+          });
+          return { ...accumulator, [column]: filtered };
+        },
+        {}
       );
-      if (taskIndex === -1) {
-        return;
-      }
-
-      const [task] = this.tasks[fromColumn].splice(taskIndex, 1);
-      task.current_column = toColumn;
-      this.tasks[toColumn] = this.tasks[toColumn] || [];
-      this.tasks[toColumn].push(task);
-      this.tasks = { ...this.tasks };
     },
   },
 });

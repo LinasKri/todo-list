@@ -15,8 +15,10 @@ onMounted(async () => {
 
 <template>
   <div class="min-h-screen bg-green-200 p-4">
-    <NewTaskForm />
-    <TaskFilters />
+    <div class="grid grid-cols-1  md:grid-cols-2 md:gap-5">
+      <NewTaskForm />
+      <TaskFilters  />
+    </div>
     <TaskList />
   </div>
 </template>

@@ -6,10 +6,14 @@ const store = useDataStore();
 
 const newTaskTitle = ref("");
 const selectedAuthor = ref(null);
-
 const successMessage = ref(false);
 
-const addTask = () => {
+const saveTaskToBackend = async (task) => {
+  console.log("Saving task to backend:", task);
+  return Promise.resolve();
+};
+
+const addTask = async () => {
   if (!newTaskTitle.value || !selectedAuthor.value) {
     alert("Fill in all the fields!");
     return;
@@ -19,7 +23,9 @@ const addTask = () => {
     id: Date.now(),
     title: newTaskTitle.value,
     author_id: selectedAuthor.value,
-    author_name: store.authors.find((a) => a.id === selectedAuthor.value)?.display_name || "Unknown Author",
+    author_name:
+      store.authors.find((a) => a.id === selectedAuthor.value)
+        ?.display_name || "Unknown Author",
     date_created: new Date().toISOString().split("T")[0],
     current_column: "To do",
   };
@@ -28,6 +34,8 @@ const addTask = () => {
     store.tasks["To do"] = [];
   }
   store.tasks["To do"].unshift(newTask);
+
+  await saveTaskToBackend(newTask);
 
   newTaskTitle.value = "";
   selectedAuthor.value = null;
@@ -39,8 +47,9 @@ const addTask = () => {
 };
 </script>
 
+
 <template>
-  <div class="p-5 bg-orange-200 rounded mb-4 relative">
+  <div class="p-5 bg-orange-200 rounded-lg mb-4 relative">
     <h3 class="text-3xl mb-2">Create a new Task</h3>
 
     <div
@@ -49,31 +58,31 @@ const addTask = () => {
     >
       Task Created!
     </div>
+    <div class="flex mb-4">
+      <div class="me-4">
+        <label class="block text-sm mb-1">Author:</label>
+        <select v-model="selectedAuthor" class="border rounded-lg p-2">
+          <option :value="null">All Authors</option>
+          <option value="" disabled>Choose Author</option>
+          <option
+            v-for="author in store.authors"
+            :key="author.id"
+            :value="author.id"
+          >
+            {{ author.display_name }}
+          </option>
+        </select>
+      </div>
 
-    <div class="mb-4">
-      <label class="block text-sm mb-1">Title</label>
-      <input
-        v-model="newTaskTitle"
-        type="text"
-        class="block rounded-lg p-2"
-        placeholder="Enter title of the task"
-      />
-    </div>
-    <div class="mb-4">
-      <label class="block text-sm mb-1">Author:</label>
-      <select
-        v-model="selectedAuthor"
-        class="border rounded-lg p-2"
-      >
-        <option value="" disabled>Choose Author</option>
-        <option
-          v-for="author in store.authors"
-          :key="author.id"
-          :value="author.id"
-        >
-          {{ author.display_name }}
-        </option>
-      </select>
+      <div class="w-full">
+        <label class="block text-sm mb-1">Title</label>
+        <input
+          v-model="newTaskTitle"
+          type="text"
+          class="block rounded-lg p-2 w-full"
+          placeholder="Enter title of the task"
+        />
+      </div>
     </div>
     <button
       @click="addTask"
